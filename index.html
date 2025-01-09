@@ -1,15 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Redirect</title>
+        <script src="https://unpkg.com/pako/dist/pako.min.js"></script>
         <script>
-            document.location = 'https://buslinedesigner.bobliu.tech/';
+            let url =
+                'https://busline.design/?settings=' +
+                btoa(
+                    String.fromCharCode(
+                        ...pako.deflate(
+                            localStorage.getItem('settings') ?? '{}'
+                        )
+                    )
+                );
+            document.onload = () => {
+                document.getElementById('link').href = url;
+            };
+            window.location = url;
         </script>
     </head>
     <body>
-        如果没有自动跳转，请<a href="https://buslinedesigner.bobliu.tech/"
+        如果没有自动跳转，请<a id="link" href="https://busline.design/"
             >点击这里</a
         >
     </body>
